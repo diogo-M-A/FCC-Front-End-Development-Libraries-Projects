@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.1/marked.min.js  "></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+    integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>Markdown Previwer</title>
+</head>
+
+<body>
+
+  <div id="app"></div>
+
+  <script type="text/babel">
+
+    marked.setOptions({
+      breaks: true
+    });
+
+    const renderer = new marked.Renderer();
+
+    function TextEditor() {
+      const [text, setText] = React.useState("");
+
+      return (
+        <div className="text-center px-4">
+          <h1 className="p-4">My markdown previwer</h1>
+          <textarea name="editor" id="editor" cols="50" rows="10" value={text} onChange={(e) => { setText(e.target.value) }}></textarea>
+          <h3 className="mt-3">otput</h3>
+          <Preview markdown={text} />
+        </div>
+      );
+
+      function Preview({ markdown }) {
+        return (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: marked(markdown, {renderer: renderer}),
+            }}
+            id="preview"
+          >
+          </div>
+        );
+      }
+    }
+    ReactDOM.render(<TextEditor />, document.getElementById("app"));
+
+  </script>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+
+</html>
