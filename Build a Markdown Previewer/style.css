@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+}
+
+body {
+  background: #333;
+  color: white;
+}
+
+#editor{
+  width: 100%;
+  font-size: 18px;
+  padding: 20px;
+  border-radius: 20px;
+  outline: none;
+}
+
+#preview{
+  background-color: white;
+  text-align: left;
+  color: black;
+  font-size: 18px;
+  padding: 40px;
+  border-radius: 20px;
+  outline: none;
+}
