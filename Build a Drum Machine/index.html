@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Build a Drum Machine</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const audio1 = [{
+      keyCode: 81,
+      keyTrigger: "Q",
+      id: "Heater-1",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
+    }, {
+      keyCode: 87,
+      keyTrigger: "W",
+      id: "Heater-2",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
+    }, {
+      keyCode: 69,
+      keyTrigger: "E",
+      id: "Heater-3",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
+    }, {
+      keyCode: 65,
+      keyTrigger: "A",
+      id: "Heater-4",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
+    }, {
+      keyCode: 83,
+      keyTrigger: "S",
+      id: "Clap",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
+    }, {
+      keyCode: 68,
+      keyTrigger: "D",
+      id: "Open-HH",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
+    }, {
+      keyCode: 90,
+      keyTrigger: "Z",
+      id: "Kick-n'-Hat",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
+    }, {
+      keyCode: 88,
+      keyTrigger: "X",
+      id: "Kick",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
+    }, {
+      keyCode: 67,
+      keyTrigger: "C",
+      id: "Closed-HH",
+      url: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
+    }]
+
+    function App() {
+      const [volume, setVolume] = React.useState(1);
+      const [recording, setRecording] = React.useState('');
+      return (
+        <div id='drum-machine' className="bg-dark min-vh-100 text-white text-center">
+          <div id='display' className="text-center">
+            <h2>Drum Machine </h2>
+            {audio1.map((clip)=>{return <Pad key={clip.id} clip={clip} volume={volume} setRecording={setRecording}/>})}
+            <h3>{recording}</h3>
+          </div>
+          <br/>
+          
+          <h4>Volume</h4>
+          <input type="range" step='0.01' value={volume} onChange={(e)=> setVolume(e.target.value)} max='1' min='0' className='w-50'/>
+          
+        </div>
+      )
+    }
+
+    function Pad({clip, volume, setRecording}){
+
+      React.useEffect(()=>{
+        document.addEventListener("keydown", handleKP);
+        return ()=>{
+          document.removeEventListener("keydown", handleKP)
+        }
+      })
+
+      const handleKP = (e)=>{
+        if(e.keyCode == clip.keyCode){
+          playSound()
+        }
+      }
+
+      const playSound = () =>{
+        const audioTag = document.getElementById(clip.keyTrigger)
+        audioTag.volume = volume
+        audioTag.currentTime = 0;
+        setRecording(()=> clip.id)
+        audioTag.play()
+      }
+
+      return(
+        <div onClick={playSound} className="btn btn-primary drum-pad p-4 m-3" id={clip.id}>
+          <audio className="clip" id={clip.keyTrigger} src={clip.url}></audio>
+          {clip.keyTrigger}
+        </div>
+      )
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'))
+
+  </script>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+
+</body>
+
+</html>
