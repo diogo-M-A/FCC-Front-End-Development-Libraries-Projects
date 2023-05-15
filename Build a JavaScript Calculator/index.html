@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .container {
+      padding-top: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      grid-gap: 10px;
+      grid-template-areas:
+        "dis dis dis dis"
+        "AC C div times"
+        "seven eigth nine minus"
+        "four five six plus"
+        "one two three equal"
+        "zero zero dot equal";
+    }
+
+    .padButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: gray;
+      color: black;
+      border: 1px solid black;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .dis {
+      grid-area: dis;
+      background-color: black;
+      color: white;
+      text-align: right;
+      font-size: 20px;
+      padding: 10px;
+    }
+
+    .AC {
+      grid-area: AC;
+    }
+
+    .C {
+      grid-area: C;
+    }
+
+    .div-btn {
+      grid-area: div;
+    }
+
+    .times {
+      grid-area: times;
+    }
+
+    .seven {
+      grid-area: seven;
+    }
+
+    .eigth {
+      grid-area: eigth;
+    }
+
+    .nine {
+      grid-area: nine;
+    }
+
+    .minus {
+      grid-area: minus;
+    }
+
+    .four {
+      grid-area: four;
+    }
+
+    .five {
+      grid-area: five;
+    }
+
+    .six {
+      grid-area: six;
+    }
+
+    .plus {
+      grid-area: plus;
+    }
+
+    .one {
+      grid-area: one;
+    }
+
+    .two {
+      grid-area: two;
+    }
+
+    .three {
+      grid-area: three;
+    }
+
+    .equal {
+      grid-area: equal;
+    }
+
+    .zero {
+      grid-area: zero;
+    }
+
+    .dot {
+      grid-area: dot;
+    }
+  </style>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      const [displayValue, setDisplayValue] = React.useState("");
+
+      const handleButtonClick = (buttonValue) => {
+        switch (buttonValue) {
+          case "AC":
+            setDisplayValue("");
+            break;
+          case "C":
+            setDisplayValue(displayValue.slice(0, -1));
+            break;
+          case "equal":
+            try {
+              const result = eval(displayValue);
+              setDisplayValue(result.toString());
+            } catch {
+              setDisplayValue("Error");
+            }
+            break;
+          default:
+            setDisplayValue(displayValue + buttonValue);
+            break;
+        }
+      };
+
+      return (
+        <div className="container">
+          <div className="grid">
+            <div className="dis" id="display">{displayValue}</div>
+            <div className="padButton AC" id="clear" onClick={() => handleButtonClick("AC")}>
+              AC
+            </div>
+            <div className="padButton C" onClick={() => handleButtonClick("C")}>
+              C
+            </div>
+            <div className="padButton div" id="multiply" onClick={() => handleButtonClick("*")}>
+              x
+            </div>
+            <div className="padButton times" id="divide" onClick={() => handleButtonClick("/")}>
+              /
+            </div>
+            <div className="padButton seven" id="seven" onClick={() => handleButtonClick("7")}>
+              7
+            </div>
+            <div className="padButton eigth" id="eight" onClick={() => handleButtonClick("8")}>
+              8
+            </div>
+            <div className="padButton nine" id="nine" onClick={() => handleButtonClick("9")}>
+              9
+            </div>
+            <div className="padButton minus" id="subtract" onClick={() => handleButtonClick("-")}>
+              -
+            </div>
+            <div className="padButton four" id="four" onClick={() => handleButtonClick("4")}>
+              4
+            </div>
+            <div className="padButton five" id="five" onClick={() => handleButtonClick("5")}>
+              5
+            </div>
+            <div className="padButton six" id="six" onClick={() => handleButtonClick("6")}>
+              6
+            </div>
+            <div className="padButton plus" id="add" onClick={() => handleButtonClick("+")}>
+              +
+            </div>
+            <div className="padButton one" id="one" onClick={() => handleButtonClick("1")}>
+              1
+            </div>
+            <div className="padButton two" id="two" onClick={() => handleButtonClick("2")}>
+              2
+            </div>
+            <div className="padButton three" id="three" onClick={() => handleButtonClick("3")}>
+              3
+            </div>
+            <div className="padButton equal" id="equals" onClick={() => handleButtonClick("equal")}>
+              =
+            </div>
+            <div className="padButton zero" id="zero" onClick={() => handleButtonClick("0")}>
+              0
+            </div>
+            <div className="padButton dot" id="decimal" onClick={() => handleButtonClick(".")}>
+              .
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+
+  </script>
+</body>
+
+</html>
